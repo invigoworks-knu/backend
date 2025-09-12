@@ -22,6 +22,10 @@ public class NewsService {
     @Async
     @Transactional
     public void saveNewsListInBatch(List<NewsDto> newsList, LocalDateTime createdAt) {
+        List<NewsDto> distinctNewsList = newsList.stream()
+                .distinct()
+                .toList();
+
         String sql = """
                 INSERT INTO news (id, score, created_at) VALUES (?, ?, ?)
                 """;
@@ -30,7 +34,7 @@ public class NewsService {
                 new BatchPreparedStatementSetter() {
                     @Override
                     public void setValues(PreparedStatement ps, int i) throws SQLException {
-                        NewsDto news = newsList.get(i);
+                        NewsDto news = distinctNewsList.get(i);
                         ps.setString(1, news.getId());
                         ps.setInt(2, news.getScore());
                         ps.setObject(3, createdAt);
@@ -38,7 +42,7 @@ public class NewsService {
 
                     @Override
                     public int getBatchSize() {
-                        return newsList.size();
+                        return distinctNewsList.size();
                     }
                 });
     }

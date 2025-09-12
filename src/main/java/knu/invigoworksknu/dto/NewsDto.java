@@ -3,6 +3,8 @@ package knu.invigoworksknu.dto;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.Objects;
+
 @Getter
 public class NewsDto {
     private String id;
@@ -19,5 +21,18 @@ public class NewsDto {
                 .id(id)
                 .score(score)
                 .build();
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        NewsDto newsDto = (NewsDto) object;
+        return Objects.equals(id, newsDto.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }
