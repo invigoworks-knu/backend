@@ -70,7 +70,7 @@ public class SentimentFacade {
             }
 
             try {
-                // 4. Double Checked Locking
+                // 4. Double-Checked Locking
                 cachedData = redisTemplate.opsForValue().get(CACHE_KEY);
                 if (cachedData != null) {
                     try {
@@ -91,7 +91,10 @@ public class SentimentFacade {
                             NewsDto news = NewsDto.of(id, sentimentScore);
                             newsList.add(news);
                             return sentimentScore;
-                        }).exceptionally(ex -> 0))
+                        }).exceptionally(ex -> {
+                            log.error("getNewsSentimentError = ", ex);
+                            return 0;
+                        }))
                         .toList();
                 CompletableFuture.allOf(breakingNewsFutures.toArray(new CompletableFuture[breakingNewsFutures.size()])).join();
 
@@ -103,7 +106,10 @@ public class SentimentFacade {
                             NewsDto news = NewsDto.of(id, sentimentScore);
                             newsList.add(news);
                             return sentimentScore;
-                        }).exceptionally(ex -> 0))
+                        }).exceptionally(ex -> {
+                            log.error("getNewsSentimentError = ", ex);
+                            return 0;
+                        }))
                         .toList();
                 CompletableFuture.allOf(ethereumNewsFutures.toArray(new CompletableFuture[ethereumNewsFutures.size()])).join();
 

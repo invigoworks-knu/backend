@@ -17,7 +17,7 @@ public class SentimentScheduler {
     private final SentimentFacade sentimentFacade;
     private final RedisTemplate<String, String> redisTemplate;
 
-    @Scheduled(cron = "0 0 * * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 53 * * * *", zone = "Asia/Seoul")
     public void saveSentimentScore() {
         redisTemplate.getConnectionFactory().getConnection().serverCommands().flushAll();
 

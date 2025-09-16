@@ -45,7 +45,7 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.15.3'
 
     // AI
-    implementation 'dev.langchain4j:langchain4j-google-ai-gemini:1.4.0'
+    implementation 'dev.langchain4j:langchain4j-open-ai:1.4.0'
     implementation 'dev.langchain4j:langchain4j:1.4.0'
 }
 

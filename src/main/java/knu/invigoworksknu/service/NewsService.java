@@ -36,7 +36,7 @@ public class NewsService {
                     public void setValues(PreparedStatement ps, int i) throws SQLException {
                         NewsDto news = distinctNewsList.get(i);
                         ps.setString(1, news.getId());
-                        ps.setInt(2, news.getScore());
+                        ps.setDouble(2, news.getScore());
                         ps.setObject(3, createdAt);
                     }
 
